@@ -7,18 +7,25 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func setCookie(w http.ResponseWriter, r *http.Request) {
 	// Create cookie
+	name := r.URL.Query().Get("name")
+
 	c := new(http.Cookie)
 	c.Name = "X-my-name"
-	c.Value = r.URL.Query().Get("name")
+	c.Value = name
 	c.Path = "/"
 
-	http.SetCookie(w, c)
-	fmt.Fprint(w, "Success set cookie")
+	if name != "" {
+		http.SetCookie(w, c)
+		fmt.Fprint(w, "Success set cookie")
+	} else {
+		fmt.Fprint(w, "name is not set")
+	}
 }
 
 func TestSetCookie(t *testing.T) {
@@ -48,6 +55,24 @@ func TestSetCookie(t *testing.T) {
 		require.Equal(t, path, c.Path)
 		fmt.Printf("%d: %v \n", i+1, c)
 	}
+}
+
+func TestGetCookie(t *testing.T) {
+	request := httptest.NewRequest(http.MethodGet, "http://localhost:8081", nil)
+	cookie := new(http.Cookie)
+	cookie.Name = "X-my-name"
+	cookie.Value = "Rizal"
+	cookie.Path = "/"
+	request.AddCookie(cookie)
+
+	recorder := httptest.NewRecorder()
+
+	getCookie(recorder, request)
+
+	body, err := io.ReadAll(recorder.Result().Body)
+	assert.NoError(t, err)
+
+	fmt.Println(string(body))
 }
 
 func getCookie(w http.ResponseWriter, r *http.Request) {
