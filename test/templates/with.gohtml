@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{.Title}}</title>
+    </head>
+    <body>
+        {{/*Contoh komentar*/}}
+        {{with .Address}}
+        <h1>City: {{.City}}</h1><br>
+        <h1>Street: {{.Street}}</h1>
+        {{else}}
+        <h1>Anda tidak mempunyai alamat</h1>
+        {{end}}
+    </body>
+</html>

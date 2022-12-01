@@ -11,17 +11,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type data struct {
-	Title   string
-	Name    string
-	Address address
-}
-
-type address struct {
-	City   string
-	Street string
-}
-
 func templateDataStruct(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("./templates/name-value.gohtml"))
 	t.ExecuteTemplate(w, "name-value.gohtml",

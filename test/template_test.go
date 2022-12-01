@@ -1,7 +1,6 @@
 package test
 
 import (
-	"embed"
 	"fmt"
 	"html/template"
 	"io"
@@ -70,12 +69,6 @@ func TestTemplateDirectory(t *testing.T) {
 	fmt.Printf("string(body): %v\n", string(body))
 }
 
-/*
-Using golang embed
-*/
-//go:embed templates/*.gohtml
-var templates embed.FS
-
 func templateEmbed(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFS(templates, "templates/*gohtml"))
 	t.ExecuteTemplate(w, "simple.gohtml", "Hello HTML Template")
@@ -112,4 +105,3 @@ func TestTemplateNoFile(t *testing.T) {
 
 	fmt.Printf("string(body): %v\n", string(body))
 }
-
