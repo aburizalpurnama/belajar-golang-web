@@ -1,0 +1,17 @@
+{{/* tanpa menggunakan template name
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{.Title}}</title>
+    </head>
+    <body> */}}
+
+{{/* menggunakan template name */}}
+{{define "simple-header"}}
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>{{.Title}}</title>
+        </head>
+        <body>
+{{end}}

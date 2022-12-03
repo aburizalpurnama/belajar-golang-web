@@ -1,0 +1,17 @@
+{{/* Tanpa Menggunakan template name
+{{template "simple-header.gohtml" .}}
+<h1>Hi {{.Name}} </h1>
+{{template "simple-footer.gohtml"}} */}}
+
+{{/* menggunakan template name */}}
+{{define "simple-content"}}
+{{template "simple-header" .}}
+        <h1>Hi {{.Name}} </h1>
+{{template "simple-footer"}}
+{{end}}
+
+
+{{/* bisa mendefinisikan lebih dari satu layout */}}
+{{define "contoh-lain"}}
+        <h1>Ini layout lain</h1>
+{{end}}
