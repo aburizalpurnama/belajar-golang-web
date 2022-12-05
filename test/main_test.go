@@ -3,6 +3,7 @@ package test
 import (
 	"embed"
 	"fmt"
+	"html/template"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -20,6 +21,10 @@ type data struct {
 	Hobbies []string
 }
 
+func (d data) SayHello(name string) string {
+	return fmt.Sprintf("Hello %s, my name is %s and my score %d", name, d.Name, d.Score)
+}
+
 type address struct {
 	City   string
 	Street string
@@ -30,6 +35,8 @@ Using golang embed
 */
 //go:embed templates/*.gohtml
 var templates embed.FS
+
+var MyTemplates = template.Must(template.ParseFS(templates, "templates/*gohtml"))
 
 var d data = data{
 	Title: "Belajar Golang Web",
